@@ -5,6 +5,8 @@ interface
 uses
   Foundation;
 
+[assembly: NamespaceAlias('Linq', ['RemObjects.Elements.Linq'])]
+
 type
   PredicateBlock = public block(aItem: not nullable id): Boolean;
   IDBlock = public block(aItem: not nullable id): id;
@@ -44,8 +46,8 @@ extension method RemObjects.Elements.System.INSFastEnumeration<T>.Skip(aCount: N
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.TakeWhile(aBlock: not nullable block(aItem: not nullable T): Boolean): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.SkipWhile(aBlock: not nullable block(aItem: not nullable T): Boolean): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
 
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderBy(aBlock: not nullable block(aItem: not nullable T): id): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderByDescending(aBlock: not nullable block(aItem: not nullable T): id): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
+extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderBy(aBlock: not nullable block(aItem: not nullable T): T): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
+extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderByDescending(aBlock: not nullable block(aItem: not nullable T): T): not nullable RemObjects.Elements.System.INSFastEnumeration<T>; inline; public;
 
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.Select<T, R>(aBlock: not nullable block(aItem: not nullable T): R): not nullable RemObjects.Elements.System.INSFastEnumeration<R>; inline; public;
 
@@ -71,15 +73,9 @@ extension method RemObjects.Elements.System.INSFastEnumeration<T>.Any(): Boolean
 // Useful helper methods
 extension method Foundation.INSFastEnumeration.array: not nullable NSArray; public;
 extension method Foundation.INSFastEnumeration.dictionary(aKeyBlock: IDBlock; aValueBlock: IDBlock): not nullable NSDictionary; public;
-extension method Foundation.INSFastEnumeration.ToList: not nullable NSMutableArray; public;
-extension method Foundation.INSFastEnumeration.ToArray: not nullable NSArray; public;
-extension method Foundation.INSFastEnumeration.ToDictionary(aKeyBlock: IDBlock; aValueBlock: IDBlock): not nullable NSDictionary; public;
 
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.array: not nullable  NSArray; inline; public;
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.dictionary(aKeyBlock: block(aItem: id): id; aValueBlock: block(aItem: id): id): not nullable NSDictionary; inline; public;
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToList: not nullable NSMutableArray<T>; inline; public;
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToArray<T>: not nullable  NSArray<T>; inline; public;
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToDictionary(aKeyBlock: block(aItem: id): id; aValueBlock: block(aItem: id): id): not nullable NSDictionary; inline; public;
 
 // Internal Helpers
 extension method Foundation.INSFastEnumeration.orderBy(aBlock: not nullable block(aItem: id): id) comparator(aComparator: NSComparator): not nullable Foundation.INSFastEnumeration; public;
@@ -196,14 +192,28 @@ end;
 
 extension method Foundation.INSFastEnumeration.OrderBy(aBlock: not nullable IDBlock): not nullable Foundation.INSFastEnumeration;
 begin
-  var lOrdered := orderBy(aBlock) comparator( (a,b) -> aBlock(a).compare(aBlock(b)) );
+  var lOrdered := orderBy(aBlock) comparator( (a,b) -> begin
+      var va := aBlock(a);
+      var vb := aBlock(b);
+      if va = nil then
+        if vb = nil then exit NSComparisonResult.OrderedSame else exit NSComparisonResult.OrderedAscending;
+      if vb = nil then exit NSComparisonResult.OrderedDescending;
+      exit va.compare(vb)
+    end);
   for each i in lOrdered do
     yield i;
 end;
 
 extension method Foundation.INSFastEnumeration.OrderByDescending(aBlock: not nullable IDBlock): not nullable Foundation.INSFastEnumeration;
 begin
-  var lOrdered := orderBy(aBlock) comparator( (a, b) -> aBlock(b).compare(aBlock(a)) );
+  var lOrdered := orderBy(aBlock) comparator( (a,b) -> begin
+      var va := aBlock(a);
+      var vb := aBlock(b);
+      if va = nil then
+        if vb = nil then exit NSComparisonResult.OrderedSame else exit NSComparisonResult.OrderedDescending;
+        if vb = nil then exit NSComparisonResult.OrderedAscending;
+      exit vb.compare(va)
+    end);
   for each i in lOrdered do
     yield i;
 end;
@@ -291,21 +301,6 @@ begin
     NSMutableDictionary(result)[aKeyBlock(i)] := aValueBlock(i);
 end;
 
-extension method Foundation.INSFastEnumeration.ToArray(): not nullable NSArray;
-begin
-  result := array;
-end;
-
-extension method Foundation.INSFastEnumeration.ToList(): not nullable NSMutableArray;
-begin
-  result := self.array().mutableCopy() as not nullable;
-end;
-
-extension method Foundation.INSFastEnumeration.ToDictionary(aKeyBlock: IDBlock; aValueBlock: IDBlock): not nullable NSDictionary;
-begin
-  result := dictionary(aKeyBlock, aValueBlock);
-end;
-
 extension method Foundation.INSFastEnumeration.FirstOrDefault(): nullable id;
 begin
   var lState: NSFastEnumerationState := default(NSFastEnumerationState);
@@ -335,7 +330,8 @@ end;
 
 extension method Foundation.INSFastEnumeration.Count: NSInteger;
 begin
-  if (self is NSArray) then exit (self as NSArray).count;
+  if self is NSArray then exit (self as NSArray).count;
+  if self.respondsToSelector(selector(count)) then exit (self as id).count;
 
   var lState: NSFastEnumerationState := default(NSFastEnumerationState);
   var lObjects: array[0..LOOP_SIZE-1] of id;
@@ -383,12 +379,12 @@ begin
   exit Foundation.INSFastEnumeration(self).SkipWhile(PredicateBlock(aBlock));
 end;
 
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderBy(aBlock: not nullable block(aItem: not nullable T): id): not nullable RemObjects.Elements.System.INSFastEnumeration<T>;
+extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderBy(aBlock: not nullable block(aItem: not nullable T): T): not nullable RemObjects.Elements.System.INSFastEnumeration<T>;
 begin
   exit Foundation.INSFastEnumeration(self).OrderBy(IDBlock(aBlock));
 end;
 
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderByDescending(aBlock: not nullable block(aItem: not nullable T): id): not nullable RemObjects.Elements.System.INSFastEnumeration<T>;
+extension method RemObjects.Elements.System.INSFastEnumeration<T>.OrderByDescending(aBlock: not nullable block(aItem: not nullable T): T): not nullable RemObjects.Elements.System.INSFastEnumeration<T>;
 begin
   exit Foundation.INSFastEnumeration(self).OrderByDescending(IDBlock(aBlock));
 end;
@@ -449,21 +445,6 @@ begin
 end;
 
 extension method RemObjects.Elements.System.INSFastEnumeration<T>.dictionary(aKeyBlock: block(aItem: id): id; aValueBlock: block(aItem: id): id): not nullable NSDictionary;
-begin
-  exit Foundation.INSFastEnumeration(self).dictionary(IDBlock(aKeyBlock), IDBlock(aValueBlock));
-end;
-
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToArray<T>: not nullable NSArray<T>; 
-begin
-  exit Foundation.INSFastEnumeration(self).array();
-end;
-
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToList: not nullable  NSMutableArray<T>; 
-begin
-  exit Foundation.INSFastEnumeration(self).array().mutableCopy() as not nullable;
-end;
-
-extension method RemObjects.Elements.System.INSFastEnumeration<T>.ToDictionary(aKeyBlock: block(aItem: id): id; aValueBlock: block(aItem: id): id): not nullable NSDictionary;
 begin
   exit Foundation.INSFastEnumeration(self).dictionary(IDBlock(aKeyBlock), IDBlock(aValueBlock));
 end;

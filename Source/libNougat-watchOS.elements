@@ -2,18 +2,20 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="4.0">
     <PropertyGroup>
         <RootNamespace>RemObjects.Elements.System</RootNamespace>
-        <ProjectGuid>104f50c3-3a92-4d03-919d-0de94acc0dbd</ProjectGuid>
+        <ProjectGuid>{ab0d5693-f617-4ebb-821e-ed5f46ce6ff0}</ProjectGuid>
         <OutputType>StaticLibrary</OutputType>
         <AssemblyName>Nougat</AssemblyName>
         <AllowLegacyOutParams>False</AllowLegacyOutParams>
         <AllowLegacyCreate>False</AllowLegacyCreate>
         <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-        <SDK>OS X</SDK>
-        <DeploymentTargetVersion>10.6</DeploymentTargetVersion>
+        <SDK>watchOS</SDK>
         <CreateHeaderFile>True</CreateHeaderFile>
-        <Name>libNougat (OS X)</Name>
+        <Name>libNougat (watchOS)</Name>
         <GenerateDebugInfo>True</GenerateDebugInfo>
-        <DefineConstants>OSX;MACOS</DefineConstants>
+        <Architecture>armv7k</Architecture>
+        <SimulatorArchitectures>i386</SimulatorArchitectures>
+        <DeploymentTargetVersion>2.0</DeploymentTargetVersion>
+        <DefineConstants>WATCHOS</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <Optimize>false</Optimize>
@@ -30,13 +32,15 @@
         <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
         <CaptureConsoleOutput>False</CaptureConsoleOutput>
         <WarnOnCaseMismatch>True</WarnOnCaseMismatch>
+        <GenerateBitcode>True</GenerateBitcode>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Foundation.fx"/>
-        <Reference Include="rtl.fx"/>
+        <Reference Include="Foundation"/>
+        <Reference Include="rtl"/>
     </ItemGroup>
     <ItemGroup/>
-    <Import Project="$(MSBuildExtensionsPath)/RemObjects Software/Oxygene/RemObjects.Oxygene.Nougat.targets"/>
+    <ItemGroup/>
+    <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Nougat.targets"/>
     <PropertyGroup>
         <PreBuildEvent/>
     </PropertyGroup>
