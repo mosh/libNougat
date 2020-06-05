@@ -1,0 +1,22 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# RemObjects Fire
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "libToffee (All)", "libToffee.elements", "{03C18619-6259-42E4-9766-5C012C3BEE67}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "libToffee (Shared)", "libToffee-Shared.elements", "{30DEB81A-AFE1-4431-A80C-9C3380070FFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03C18619-6259-42E4-9766-5C012C3BEE67}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{03C18619-6259-42E4-9766-5C012C3BEE67}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{03C18619-6259-42E4-9766-5C012C3BEE67}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{03C18619-6259-42E4-9766-5C012C3BEE67}.Release|AnyCPU.Build.0 = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

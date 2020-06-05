@@ -1,0 +1,130 @@
+4da1195b767c0968117460cb6da8bc55ee3de1f88497d534f819c0530045e86d973c961197ecaae01146a0abf21c943b6a4d234f9391e9281fb27103738ea347b89946d1622cd2a82fd1904184d5d0ec53bde8ffb7b679b2ce9c63decc5074fd38a0bac0d14962e23413f7922f57f6fbae227f603916e1ffda5fc746ac065c82feaa0bb0c6b898cae03e1e83eb54746ab5c4e7c7cbc84af8ee5e3ae0f6638b72c6b5f17226c8058b9c32b4ebf920209f4f87cc9deaa879f67c68c8ce7f9c87b75db38698694e8f1066db0139ff32e5ce3a0b4b4f2ba3e39aefd5c601b6ca861eab7922206178df5869f770518b482dd30c94cad01b42ebf332dbcf2396026fe3
+3970529df2bfe07efba0d87d78d3c3b0fbf56088154a1e47b9c515e6010e6392c99e2646bae9dcf14d453288c8b3a93185b95532b2b7f331eb0393b8a315025319dd1ff331ee9fd122567e6e992e4508ca0442f7879d9744db8229ae9796a5f97199c6da3c645689746f156944e38f35efab92b9c57701efb0c0dbbcf20a0bd0
+//
+// libToffee Oxygene
+//
+
+[License]
+LicenseType=Project
+Product=Oxygene
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Oxygene
+ProjectName=libToffee (macOS)
+ProjectFileName=libToffee-macOS.elements
+ProjectGuid={104f50c3-3a92-4d03-919d-0de94acc0dbd}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Oxygene
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Oxygene
+ProjectName=libToffee (iOS)
+ProjectFileName=libToffee-iOS.elements
+ProjectGuid={477ec1b1-0aa5-47d6-a4c3-ef8d5081190e}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Oxygene
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Oxygene
+ProjectName=libToffee (tvOS)
+ProjectFileName=libToffee-tvOS.elements
+ProjectGuid={9f1ace20-c2ca-42a3-8ca5-c67c0b75088c}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Oxygene
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Oxygene
+ProjectName=libToffee (watchOS)
+ProjectFileName=libToffee-watchOS.elements
+ProjectGuid={ab0d5693-f617-4ebb-821e-ed5f46ce6ff0}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+//
+// libToffee Silver
+//
+
+[License]
+LicenseType=Project
+Product=Silver
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Silver
+ProjectName=libToffee (macOS)
+ProjectFileName=libToffee-macOS.elements
+ProjectGuid={104f50c3-3a92-4d03-919d-0de94acc0dbd}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Silver
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Silver
+ProjectName=libToffee (iOS)
+ProjectFileName=libToffee-iOS.elements
+ProjectGuid={477ec1b1-0aa5-47d6-a4c3-ef8d5081190e}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Silver
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Silver
+ProjectName=libToffee (tvOS)
+ProjectFileName=libToffee-tvOS.elements
+ProjectGuid={9f1ace20-c2ca-42a3-8ca5-c67c0b75088c}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[License]
+LicenseType=Project
+Product=Silver
+Platform=Cocoa
+AllowBeta=1
+AllowFull=1
+
+DisplayName=libToffee Contributor License for Silver
+ProjectName=libToffee (watchOS)
+ProjectFileName=libToffee-watchOS.elements
+ProjectGuid={ab0d5693-f617-4ebb-821e-ed5f46ce6ff0}
+ProjectAssemblyName=Toffee
+ProjectOutputType=StaticLibrary
+
+[SignatureInfo]
+LicenseFileStartDate=2016-06-27
+LicenseFileEndDate=2017-06-29
+P1=17659122090546708172
+P2=1518221019335366929
+P3=3856019927
+P4=503315048
+
